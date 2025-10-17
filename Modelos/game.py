@@ -1,3 +1,5 @@
+import json
+
 class game:
 
     jogos = []
@@ -7,6 +9,9 @@ class game:
         self._genre = genre
         self._platform = platform
         game.jogos.append(self)
+        with open('jogos.json', 'w') as f:
+            jogos_lista = [jogo.__dict__ for jogo in game.jogos]
+            json.dump(jogos_lista, f, indent=4)
     
     def __str__(self):
         if hasattr(self, 'nota'):
@@ -16,17 +21,10 @@ class game:
     
     def dar_nota(self, nota):
         self.nota = nota
-        return f"A nota de {self._name} é {self.nota}"
+        return f"A nota de {self._name} agora é {self.nota}"
     
     @classmethod
     def listar_jogos(cls):
         for jogo in cls.jogos:
             print(jogo)
     
-    @classmethod
-    def adicionar_jogo():
-        input_nome = input("Nome do jogo: ")
-        input_genero = input("Gênero do jogo: ")
-        input_plataforma = input("Plataforma do jogo: ")
-        novo_jogo = game(input_nome, input_genero, input_plataforma)
-        print(f'Jogo {novo_jogo._name} adicionado com sucesso!')
