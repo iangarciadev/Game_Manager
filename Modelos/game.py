@@ -22,3 +22,11 @@ class game:
     def listar_jogos(cls):
         for jogo in cls.jogos:
             print(jogo)
+    
+    @classmethod
+    def adicionar_jogo():
+        input_nome = input("Nome do jogo: ")
+        input_genero = input("Gênero do jogo: ")
+        input_plataforma = input("Plataforma do jogo: ")
+        novo_jogo = game(input_nome, input_genero, input_plataforma)
+        print(f'Jogo {novo_jogo._name} adicionado com sucesso!')
