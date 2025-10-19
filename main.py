@@ -25,20 +25,7 @@ def main():
         elif escolha == '2':
             game.listar_jogos()
         elif escolha == '3':
-            nome_jogo = input("Digite o nome do jogo para dar uma nota: ")
-            for jogo in game.jogos:
-                if jogo._name.lower() == nome_jogo.lower():
-                    try:
-                        nota = float(input(f"Digite a nota para {jogo._name} (0-10): "))
-                        if 0 <= nota <= 10:
-                            print(jogo.dar_nota(nota))
-                        else:
-                            print("Nota deve ser entre 0 e 10.")
-                    except ValueError:
-                        print("Por favor, insira um número válido.")
-                    break
-            else:
-                print("Jogo não encontrado.")
+            game.dar_nota()
         elif escolha == '4':
             print("Saindo do programa...")
             break

@@ -2,16 +2,13 @@ import json
 
 class game:
 
-    jogos = []
-
-    def __init__(self, name, genre, platform):
+    def __init__(self, name, genre, platform, nota=None):
         self._name = name.title()
         self._genre = genre
         self._platform = platform
-        game.jogos.append(self)
-        with open('jogos.json', 'w') as f:
-            jogos_lista = [jogo.__dict__ for jogo in game.jogos]
-            json.dump(jogos_lista, f, indent=4)
+        self.nota = nota
+
+        self.salvar_no_arquivo()
     
     def __str__(self):
         if hasattr(self, 'nota'):
@@ -19,12 +16,55 @@ class game:
         else:
             return f"{self._name} - {self._genre} - {self._platform}"
     
-    def dar_nota(self, nota):
-        self.nota = nota
-        return f"A nota de {self._name} agora é {self.nota}"
+    def to_dict(self):
+        return {
+            "nome": self._name,
+            "genero": self._genre,
+            "plataforma": self._platform,
+            "nota": self.nota
+        }
     
+    def salvar_no_arquivo(self):
+        try:
+            with open('jogos.json', 'r') as f:
+                jogos_lista = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            jogos_lista = []
+        
+        jogos_lista.append(self.to_dict())
+
+        with open('jogos.json', 'w') as f:
+            json.dump(jogos_lista, f, indent=4)
+
+    @classmethod
+    def dar_nota(cls):
+        nome_jogo = input("Digite o nome do jogo que deseja avaliar: ").title()
+        try:
+            with open('jogos.json', 'r') as f:
+                jogos_lista = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("Nenhum jogo cadastrado.")
+            return
+
+        for jogo in jogos_lista:
+            if jogo['nome'] == nome_jogo:
+                nota = input(f"Digite a nota para o jogo {nome_jogo}: ")
+                jogo['nota'] = nota
+                with open('jogos.json', 'w') as f:
+                    json.dump(jogos_lista, f, indent=4)
+                print(f"Nota {nota} atribuída ao jogo {nome_jogo}.")
+                return
+        
+        print(f"Jogo {nome_jogo} não encontrado.")
+
     @classmethod
     def listar_jogos(cls):
-        for jogo in cls.jogos:
-            print(jogo)
-    
+        try:
+            with open('jogos.json', 'r') as f:
+                jogos_lista = json.load(f)
+                print("\nJogos cadastrados:")
+                for jogo in jogos_lista:
+                    nota = jogo['nota'] if jogo['nota'] is not None else "Sem nota"
+                    print(f"{jogo['nome']} - {jogo['genero']} - {jogo['plataforma']} - Nota: {nota}")
+        except (FileNotFoundError, json.JSONDecodeError):
+            return "Nenhum jogo cadastrado."
