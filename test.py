@@ -1,8 +1,16 @@
 from Modelos.game import game
 
 
-Tomb_Raider = game("Tomb Raider", "Ação/Aventura", "PC")
-FIFA_23 = game("FIFA 23", "Esporte", "PlayStation 5")
+teste = game.abrir_arquivo()
+input_nome = input("Nome do jogo: ").capitalize()
+if any(jogo['nome'] == input_nome for jogo in teste):
+    print(f"O jogo {input_nome} já está cadastrado.")
+else:
+    input_genero = input("Gênero do jogo: ")
+    input_plataforma = input("Plataforma do jogo: ")
+    novo_jogo = game(input_nome, input_genero, input_plataforma)
+    print(f'Jogo {novo_jogo._name} adicionado com sucesso!')
+
 
 
 
