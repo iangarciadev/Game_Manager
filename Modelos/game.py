@@ -68,3 +68,22 @@ class game:
             for jogo in jogos_lista:
                 nota = jogo['nota'] if jogo['nota'] is not None else "Sem nota"
                 print(f"{jogo['nome']} - {jogo['genero']} - {jogo['plataforma']} - Nota: {nota}")
+    
+    @classmethod
+    def buscar_jogo(cls, nome_jogo):
+        jogos_lista = cls.abrir_arquivo()
+        for jogo in jogos_lista:
+            if jogo['nome'] == nome_jogo:
+                return f'Jogo encontrado: {jogo["nome"]} - {jogo["genero"]} - {jogo["plataforma"]} - Nota: {jogo["nota"] if jogo["nota"] is not None else "Sem nota"}'
+        return "Jogo não encontrado."
+    
+    @classmethod
+    def deletar_jogo(cls, nome_jogo):
+        jogos_lista = cls.abrir_arquivo()
+        for jogo in jogos_lista:
+            if jogo['nome'] == nome_jogo:
+                jogos_lista.remove(jogo)
+                with open('jogos.json', 'w') as f:
+                    json.dump(jogos_lista, f, indent=4)
+                return f'Jogo {nome_jogo} deletado com sucesso.'
+        return "Jogo não encontrado."

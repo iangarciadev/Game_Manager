@@ -6,7 +6,9 @@ def exibir_menu():
     print("1. Adicionar jogo")
     print("2. Listar jogos")
     print("3. Dar nota a um jogo")
-    print("4. Sair")
+    print("4. Buscar jogo")
+    print("5. Deletar jogo")
+    print("6. Sair")
 
 def adicionar_jogo():
     input_nome = input("Nome do jogo: ")
@@ -30,7 +32,15 @@ def main():
         elif escolha == '3':
             game.dar_nota()
         elif escolha == '4':
-            print("Saindo do programa...")
+            input_nome = input("Nome do jogo que deseja buscar: ")
+            resultado = game.buscar_jogo(input_nome)
+            print(resultado)
+        elif escolha == '5':
+            input_nome = input("Nome do jogo que deseja deletar: ")
+            resultado = game.deletar_jogo(input_nome)
+            print(resultado)
+        elif escolha == '6':
+            print("Saindo do programa.")
             break
         else:
             print("Opção inválida. Tente novamente.")
