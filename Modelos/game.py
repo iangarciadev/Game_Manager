@@ -1,6 +1,6 @@
 import json
 
-class game:
+class Game:
 
     def __init__(self, name, genre, platform, nota=None):
         self._name = name

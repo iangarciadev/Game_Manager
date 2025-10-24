@@ -1,4 +1,4 @@
-from Modelos.game import game
+from Modelos.game import Game
 
 
 def exibir_menu():
@@ -12,12 +12,12 @@ def exibir_menu():
 
 def adicionar_jogo():
     input_nome = input("Nome do jogo: ")
-    if any(jogo['nome'] == input_nome for jogo in game.abrir_arquivo()):
+    if any(jogo['nome'] == input_nome for jogo in Game.abrir_arquivo()):
         print(f"O jogo {input_nome} já está cadastrado.")
     else:
         input_genero = input("Gênero do jogo: ")
         input_plataforma = input("Plataforma do jogo: ")
-        novo_jogo = game(input_nome, input_genero, input_plataforma)
+        novo_jogo = Game(input_nome, input_genero, input_plataforma)
         print(f'Jogo {novo_jogo._name} adicionado com sucesso!')
 
 def main():
@@ -28,16 +28,16 @@ def main():
         if escolha == '1':
             adicionar_jogo()
         elif escolha == '2':
-            game.listar_jogos()
+            Game.listar_jogos()
         elif escolha == '3':
-            game.dar_nota()
+            Game.dar_nota()
         elif escolha == '4':
             input_nome = input("Nome do jogo que deseja buscar: ")
-            resultado = game.buscar_jogo(input_nome)
+            resultado = Game.buscar_jogo(input_nome)
             print(resultado)
         elif escolha == '5':
             input_nome = input("Nome do jogo que deseja deletar: ")
-            resultado = game.deletar_jogo(input_nome)
+            resultado = Game.deletar_jogo(input_nome)
             print(resultado)
         elif escolha == '6':
             print("Saindo do programa.")
